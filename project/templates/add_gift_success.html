@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Gift Idea Added!
+</h1>
+<a class="button" href={{ url_for('main.add_gift') }}>
+  Add Another Gift
+</a>
+{% endblock %}
