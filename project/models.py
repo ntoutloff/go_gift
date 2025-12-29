@@ -13,7 +13,7 @@ from . import db
 class User(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(Integer(), primary_key=True) # primary keys are required by SQLAlchemy
     email: Mapped[str] = mapped_column(String(100), unique=True)
-    password = mapped_column(String(100))
+    password = mapped_column(String(1000))
     name = mapped_column(String(1000))
 
 class Gift(db.Model):
