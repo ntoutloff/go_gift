@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     
     # Configuration
-    if 'liveconsole' not in gethostname(): # If not running on pythonanywhere, use local sqlite db
+    if gethostname() != 'blue-liveweb48': # If not running on pythonanywhere, use local sqlite db
         print('hostname:', gethostname())
         # app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
         # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
