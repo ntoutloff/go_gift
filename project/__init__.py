@@ -10,6 +10,8 @@ DB_USER = "ntoutloff"
 DB_PW = "mysql1986"
 DB_HOST = f"{DB_USER}.mysql.pythonanywhere-services.com"
 DB_NAME = f"{DB_USER}$go_gift"
+
+
 def create_app():
     app = Flask(__name__)
     
