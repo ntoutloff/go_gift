@@ -15,10 +15,9 @@ def create_app():
     
     # Configuration
     if gethostname() != 'blue-liveweb48': # If not running on pythonanywhere, use local sqlite db
-        print('hostname:', gethostname())
-        # app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
-        # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-        # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     else:
         app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
