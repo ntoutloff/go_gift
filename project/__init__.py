@@ -14,14 +14,7 @@ def create_app():
     app = Flask(__name__)
     
     # Configuration
-    # app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # if 'liveconsole' not in gethostname():
-    #     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    # else:
-    #     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USER}:{DB_PW}@{DB_HOST}:3306/{DB_NAME}'
-    #     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 280, 'connect_args': {'connect_timeout': 5}}
-    # app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
+    app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USER}:{DB_PW}@{DB_HOST}:3306/{DB_NAME}'
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 280, 'connect_args': {'connect_timeout': 5}}
