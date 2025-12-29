@@ -26,7 +26,7 @@ def login_post():
         flash('user not found')
         return redirect(url_for('auth.login'))
     if not check_password_hash(user.password, password):
-        flash(f'password hash failed {user.password}')
+        flash(f'password hash failed {password}')
         return redirect(url_for('auth.login'))
 
     login_user(user, remember=remember)
