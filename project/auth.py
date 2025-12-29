@@ -18,8 +18,15 @@ def login_post():
 
     user = User.query.filter_by(email=email).first()
 
-    if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
+    # if not user or not check_password_hash(user.password, password):
+    #     flash('Please check your login details and try again.')
+    #     return redirect(url_for('auth.login'))
+    
+    if not user:
+        flash('user not found')
+        return redirect(url_for('auth.login'))
+    if not check_password_hash(user.password, password):
+        flash('password hash failed')
         return redirect(url_for('auth.login'))
 
     login_user(user, remember=remember)
