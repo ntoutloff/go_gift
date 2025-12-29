@@ -15,9 +15,10 @@ def create_app():
     
     # Configuration
     if 'liveconsole' not in gethostname(): # If not running on pythonanywhere, use local sqlite db
-        app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        print('hostname:', gethostname())
+        # app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
+        # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+        # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     else:
         app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
