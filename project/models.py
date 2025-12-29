@@ -21,6 +21,6 @@ class Gift(db.Model):
     gifter: Mapped[int] = mapped_column(Integer(), nullable=False)
     giftee: Mapped[int] = mapped_column(Integer(), nullable=False)
     gift: Mapped[str] = mapped_column(String(100), nullable=False)
-    details: Mapped[Optional[str]] = mapped_column(String())
+    details: Mapped[Optional[str]] = mapped_column(String(1000))
     price: Mapped[int] = mapped_column(Integer())
-    link: Mapped[Optional[str]] = mapped_column(String())
+    link: Mapped[Optional[str]] = mapped_column(String(1000))
