@@ -2,8 +2,9 @@
 
 {% block content %}
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Sign Up</h3>
+    
     <div class="box">
+        <p class="title has-text-centered">Create Account</p>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="notification is-danger">
@@ -14,25 +15,70 @@
         
         <form method="POST" action="/signup">
             <div class="field">
+                <label class="label">Email</label>
                 <div class="control">
-                    <input class="input" type="email" name="email" placeholder="Email" autofocus="">
+                    <input class="input" type="email" name="email" placeholder="Your email will serve as your username." autofocus="" required>
                 </div>
             </div>
 
             <div class="field">
+                <label class="label">Name</label>
                 <div class="control">
-                    <input class="input" type="text" name="name" placeholder="Name" autofocus="">
+                    <input class="input" type="text" name="name" placeholder="Name to be displayed. Can be changed later. Maybe." autofocus="" required>
                 </div>
             </div>
 
             <div class="field">
+                <label class="label">Password</label>
                 <div class="control">
-                    <input class="input" type="password" name="password" placeholder="Password">
+                    <input class="input" type="password" id="password" name="password" placeholder="8+ chars." required minlength="8">
                 </div>
             </div>
 
-            <button class="button is-block is-info is-fullwidth">Sign Up</button>
+            <div class="field">
+                <label class="label">Confirm Password</label>
+                <div class="control">
+                    <input class="input" type="password" id="confirm_password" name="confirm_password" placeholder="Retype your password." required minlength="8">
+                </div>
+            </div>
+            
+            <button class="button is-info">Sign Up</button>
+            
+            
         </form>
     </div>
 </div>
+
+<script>
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm_password");
+    var match_message = document.getElementById("match_message");
+
+    function validatePasswordMatch() {
+        if (password.value == confirm_password.value) {
+            confirm_password.setCustomValidity(''); // No error, input is valid
+            match_message.textContent = 'Passwords match!';
+            match_message.style.color = 'green';
+        } else {
+            // Set a custom validation error message
+            confirm_password.setCustomValidity('Passwords do not match');
+            match_message.textContent = 'Passwords do not match!';
+            match_message.style.color = 'red';
+        }
+    }
+
+    // Add event listeners to check for match as the user types
+    password.addEventListener('input', validatePasswordMatch);
+    confirm_password.addEventListener('input', validatePasswordMatch);
+
+    // Optional: Add an onsubmit handler to prevent submission if invalid (though browser handles this via setCustomValidity)
+    function validateForm() {
+        if (password.value != confirm_password.value) {
+            // Focus on the confirm password field if it's invalid
+            confirm_password.focus(); 
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
 {% endblock %}

@@ -1,10 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-  
-    <div class="has-text-centered">
-        <p class="title">Welcome!</p>
-        <p class="subtitle">Log in, sign up or get out!</p>
-    </div>
+<section class="hero is-link has-text-centered">
+  <div class="hero-body">
+
+    {% if current_user.is_authenticated %}
     
+    <p class="title">Welcome {{ current_user.name }}!</p>
+    <p class="subtitle">Use the navigation at the top to get started.</p>
+
+    {% else %}
+    
+    <p class="title">Welcome!</p>
+    <p class="subtitle">Log in, sign up or get out!</p>
+    <div class="buttons">
+      <a href="{{ url_for('auth.login') }}" class="button is-primary">
+        Login
+      </a>
+      <a href="{{ url_for('auth.signup') }}" class="button is-info">
+        Sign Up
+      </a>
+    </div>
+
+    {% endif %}
+
+  </div>
+</section>
+
 {% endblock %}

@@ -1,10 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Welcome, {{ name }}!
-</h1>
-<a class="button" href={{ url_for('main.add_gift') }}>
-  Add Gift
-</a>
+<div class="block">
+  <section class="hero is-link">
+    <div class="hero-body">
+      <p class="title">Welcome, {{ name }}!</p>
+      <p class="subtitle">Use the navigation at the top to get started.</p>
+    </div>
+  </section>
+</div>
+
+
+<div class="block">
+  <div class="container">
+    <div class="box">
+      <table class="table">
+        <tbody>
+
+          <tr>
+            <th>Name</th>
+            <td>{{ current_user.name }}</td>
+          </tr>
+
+          <tr>
+            <th>Email</th>
+            <td>{{ current_user.email }}</td>
+          </trow>
+
+          <tr>
+            <th>Name</th>
+            <td>{{ current_user.name }}</td>
+          </tr>
+
+          <tr>
+            <th>Name</th>
+            <td>{{ current_user.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}
