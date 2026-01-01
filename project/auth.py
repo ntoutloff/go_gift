@@ -7,6 +7,7 @@ import smtplib
 from email.message import EmailMessage
 import os
 
+
 from .models import User
 from . import db
 
@@ -16,6 +17,7 @@ def generate_code() -> str:
     return str(randint(100000, 999999))
 
 def send_confirmation_email(user_email: str, code: str):
+    print(f'Sending email to {user_email}...')
     email_sender = 'gogiftmailer@gmail.com'
     email_password = os.getenv('EMAIL_PW') 
     email_receiver = user_email
@@ -37,42 +39,36 @@ def send_confirmation_email(user_email: str, code: str):
             server.starttls()
             server.login(email_sender, email_password)
             server.send_message(msg)
-        print(f"confirmation email for {user_email} sent successfully!")
+        print(f"Confirmation email for {user_email} sent successfully!")
     except Exception as e:
         print(f"Error sending email for {user_email}: {e}")
 
 
-@auth.get('/send_email/<int:id>')
-def send_email(id: int):
-    user = db.session.get(User, id)
-    if user and not user.confirmed:
-        user.confirmation_code = generate_code()
-        send_confirmation_email(user.email, user.confirmation_code)
-        db.session.commit()
-        return redirect(url_for('auth.confirm_email', id=id))
-    else:
-        return redirect(url_for('main.index'))
+# @auth.get('/send_email/<int:id>')
+# def send_email(id: int):
+#     user = db.session.get(User, id)
+#     if user and not user.confirmed:
+#         user.confirmation_code = generate_code()
+#         send_confirmation_email(user.email, user.confirmation_code)
+#         db.session.commit()
+#         return redirect(url_for('auth.confirm_email', id=id))
+#     else:
+#         return redirect(url_for('main.index'))
 
 
 @auth.route('/confirm_email/<int:id>', methods=['GET', 'POST'])
 def confirm_email(id: int):
-    print('hello')
     user = db.session.get(User, id)
     if request.method == 'POST':
         code = request.form.get('code')
-        
-        print(code)
-        print(user.confirmation_code)
-        print(user and user.confirmation_code == code)
         if user and user.confirmation_code == code:
             user.confirmed = True
             db.session.commit()
             return redirect(url_for('auth.login'))
         else:
             return render_template('confirm_email.html', user=user, error="Invalid confirmation code.")
-    else:
-        print('huh?')
-        return render_template('confirm_email.html', user=user)
+    print(user)
+    return render_template('confirm_email.html', user=user)
 
 
 @auth.route('/login')
@@ -136,7 +132,11 @@ def signup_post():
     )
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('auth.send_email', id=new_user.id))
+
+    
+    send_confirmation_email(new_user.email, new_user.confirmation_code)
+
+    return redirect(url_for('auth.confirm_email', id=new_user.id))
 
 
 @auth.route('/logout')

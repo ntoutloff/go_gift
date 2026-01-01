@@ -13,7 +13,8 @@
             {% endif %}
         {% endwith %}
         
-        <form method="POST" action="/signup">
+        <form  method="POST" action="/signup">
+            
             <div class="block">
             
                 <div class="field">
@@ -42,17 +43,18 @@
                     <div class="control">
                         <input class="input" type="password" id="confirm_password" name="confirm_password" placeholder="Retype your password." required minlength="8">
                     </div>
+                    <p id="match_message"></p>
                 </div>
             </div>
 
             <div class="block">
-                <button class="button is-info is-fullwidth">Sign Up</button>
+                <button class="button is-info is-fullwidth" id="submitBtn">Sign Up</button>
             </div>
 
             <div class="block">
                 <p class="has-text-centered">Already have an account? <a href={{ url_for('auth.login') }}>Log in</a></p>
             </div>
-            
+        
         </form>
     </div>
 </div>
@@ -88,5 +90,6 @@
         }
         return true; // Allow form submission
     }
+
 </script>
 {% endblock %}
