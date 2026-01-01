@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-link has-text-centered">
+  <div class="hero-body">
+    <p class="title">Your Friends</p>
+  </div>
+</section>
+
+<div class="container">
+  <!-- Tabs -->
+  <div class="tabs">
+    <ul>
+      <li class="is-active" data-tab="friends-tab">
+        <a>Friends</a>
+      </li>
+      <li data-tab="pending-tab">
+        <a>Pending Requests</a>
+      </li>
+      <li data-tab="request-tab">
+        <a>Send Request</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Tab Content -->
+  <div id="friends-tab" class="tab-content">
+
+
+    <div class="box">
+      {% if not friends %}
+      <p class="title">You have no friends :(</p>
+      <p class="subtitle">This site only makes sense if you have friends.</p>
+      {% else %}
+      {% for friend in friends %}
+      <p class="title">{{ friend.name }}</p>
+      {% endfor %}
+
+      {% endif %}
+    </div>
+  </div>
+
+  <div id="pending-tab" class="tab-content is-hidden">
+    <div class="box">
+      <h3 class="title is-5">Tab 2 Content</h3>
+      <p>This is content for Tab 2.</p>
+    </div>
+  </div>
+
+  <div id="request-tab" class="tab-content is-hidden">
+    <div class="column is-6 is-offset-3">
+      <div class="box">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}  
+        <form method="POST" action="{{ url_for('main.friends') }}">
+            <div class="block">
+
+              <div class="field">
+                <label class="label">Friend's email</label>
+                <div class="control">
+                  <input class="input" type="email" name="email" placeholder="Exactly as they entered it. Sorry."
+                    autofocus="" required>
+                </div>
+              </div>
+
+              <div class="block">
+                <button class="button is-info is-fullwidth">Find friend</button>
+              </div>
+
+          </form>
+        {% if found_friend %}
+        <div class="block">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{ found_friend.name }}</td>
+                        <td>{{ found_friend.email }}</td>
+                        <td><a class="button is-primary">Send Request</a></td>
+                    </tr>
+                </tbody>            
+            </table>    
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<script>
+  const startTab = "{{ active_tab }}";
+  console.log("active tab: ", startTab);
+  document.querySelectorAll('.tabs li').forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active state from all tabs
+      document.querySelectorAll('.tabs li').forEach(item => {
+        item.classList.remove('is-active');
+      });
+
+      // Hide all content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('is-hidden');
+      });
+
+      // Activate clicked tab
+      tab.classList.add('is-active');
+      document.getElementById(tab.dataset.tab).classList.remove('is-hidden');
+    });
+  });
+  if (startTab) {
+    const element = document.querySelector(`[data-tab="${startTab}"]`);
+    element.click()
+  }
+</script>
+{% endblock %}

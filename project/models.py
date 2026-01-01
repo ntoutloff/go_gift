@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Integer, Boolean
+from sqlalchemy import String, Integer, Boolean, Enum
 from typing import Optional
 from . import db
 
@@ -22,3 +22,18 @@ class Gift(db.Model):
     details: Mapped[Optional[str]] = mapped_column(String(1000))
     price: Mapped[int] = mapped_column(Integer())
     link: Mapped[Optional[str]] = mapped_column(String(1000))
+
+
+class Friend(db.Model):
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+    uid1: Mapped[int] = mapped_column(Integer(), nullable=False)
+    uid2: Mapped[int] = mapped_column(Integer(), nullable=False)
+    requestor: Mapped[str] = mapped_column(Enum('UID1', 'UID2'), nullable=False)
+
+
+class FriendRequest(db.Model):
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer(), nullable=False)
+    friend_id: Mapped[int] = mapped_column(Integer(), nullable=False)
+
+

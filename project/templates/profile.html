@@ -3,42 +3,38 @@
 {% block content %}
 <div class="block">
   <section class="hero is-link">
-    <div class="hero-body">
-      <p class="title">Welcome, {{ name }}!</p>
-      <p class="subtitle">Use the navigation at the top to get started.</p>
+    <div class="hero-body has-text-centered">
+      <p class="title">Profile for {{ name }}</p>
+      <p class="subtitle">Not much to see here yet.</p>
     </div>
   </section>
 </div>
 
 
-<div class="block">
-  <div class="container">
+<div class="column is-4 is-offset-4">
+  <!-- <div class="container"> -->
     <div class="box">
-      <table class="table">
-        <tbody>
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <table class="table mx-auto">
+            <tbody>
 
-          <tr>
-            <th>Name</th>
-            <td>{{ current_user.name }}</td>
-          </tr>
+              <tr>
+                <th>Name</th>
+                <td>{{ current_user.name }}</td>
+                <td class="button is-primary">Update</td>
+              </tr>
 
-          <tr>
-            <th>Email</th>
-            <td>{{ current_user.email }}</td>
-          </trow>
+              <tr>
+                <th>Email</th>
+                <td>{{ current_user.email }}</td>
+              </trow>
 
-          <tr>
-            <th>Name</th>
-            <td>{{ current_user.name }}</td>
-          </tr>
-
-          <tr>
-            <th>Name</th>
-            <td>{{ current_user.name }}</td>
-          </tr>
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
+  <!-- </div> -->
 </div>
 {% endblock %}

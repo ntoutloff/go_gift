@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy import select
 from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint
@@ -44,13 +44,14 @@ def send_confirmation_email(user_email: str, code: str):
 @auth.get('/send_email/<int:id>')
 def send_email(id: int):
     user = db.session.get(User, id)
-    if user:
+    if user and not user.confirmed:
         user.confirmation_code = generate_code()
         send_confirmation_email(user.email, user.confirmation_code)
         db.session.commit()
         return redirect(url_for('auth.confirm_email', id=id))
     else:
-        return redirect(url_for('confirmation_error'))
+        return redirect(url_for('main.index'))
+
 
 @auth.route('/confirm_email/<int:id>', methods=['GET', 'POST'])
 def confirm_email(id: int):
@@ -75,6 +76,8 @@ def confirm_email(id: int):
 
 @auth.route('/login')
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
     return render_template('login.html')
 
 
@@ -102,6 +105,8 @@ def login_post():
 
 @auth.get('/signup')
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
     return render_template('signup.html')
 
 

@@ -7,13 +7,13 @@
     {% if current_user.is_authenticated %}
     
     <p class="title">Welcome {{ current_user.name }}!</p>
-    <p class="subtitle">Use the navigation at the top to get started.</p>
+    <p class="subtitle">Use the <strong>Friends</strong> tab to make friends and suggest gifts.</p>
 
     {% else %}
     
     <p class="title">Welcome!</p>
     <p class="subtitle">Log in, sign up or get out!</p>
-    <div class="buttons">
+    <div class="buttons is-centered">
       <a href="{{ url_for('auth.login') }}" class="button is-primary">
         Login
       </a>

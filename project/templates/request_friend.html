@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <!-- Tabs -->
+    <div class="tabs">
+      <ul>
+        <li class="is-active" data-tab="friends-tab">
+          <a>Friends</a>
+        </li>
+        <li data-tab="pending-tab">
+          <a>Pending Requests</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="friends-tab" class="tab-content">
+      <div class="box">
+        <h3 class="title is-5">Tab 1 Content</h3>
+        <p>This is content for Tab 1.</p>
+      </div>
+    </div>
+
+    <div id="pending-tab" class="tab-content is-hidden">
+      <div class="box">
+        <h3 class="title is-5">Tab 2 Content</h3>
+        <p>This is content for Tab 2.</p>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.querySelectorAll('.tabs li').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active state from all tabs
+        document.querySelectorAll('.tabs li').forEach(item => {
+          item.classList.remove('is-active');
+        });
+
+        // Hide all content
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.add('is-hidden');
+        });
+
+        // Activate clicked tab
+        tab.classList.add('is-active');
+        document.getElementById(tab.dataset.tab).classList.remove('is-hidden');
+      });
+    });
+  </script>
+{% endblock %}

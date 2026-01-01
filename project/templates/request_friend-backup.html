@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- <div class="block">
+  <section class="hero is-link">
+    <div class="hero-body has-text-centered">
+      <p class="title">Profile for {{ name }}</p>
+      <p class="subtitle">Not much to see here yet.</p>
+    </div>
+  </section>
+</div> -->
+
+
+<div class="column is-4 is-offset-4">
+    
+    <div class="box">
+        <p class="title has-text-centered">Find a Friend</p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="block">
+            <form method="POST" action="{{ url_for('main.find_friend') }}">
+                <div class="block">
+                
+                    <div class="field">
+                        <label class="label">Friend's email</label>
+                        <div class="control">
+                            <input class="input" type="email" name="email" placeholder="Exactly as they entered it. Sorry." autofocus="" required>
+                        </div>
+                    </div>
+
+                <div class="block">
+                    <button class="button is-info is-fullwidth">Find friend</button>
+                </div>
+                
+            </form>
+        </div>
+        {% if friend %}
+        <div class="block">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{ friend.name }}</td>
+                        <td>{{ friend.email }}</td>
+                        <td>Request Friend</td>
+                    </tr>
+                </tbody>            
+            </table>    
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
