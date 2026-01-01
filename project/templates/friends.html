@@ -9,7 +9,7 @@
 
 <div class="container">
   <!-- Tabs -->
-  <div class="tabs">
+  <div class="tabs is-centered">
     <ul>
       <li class="is-active" data-tab="friends-tab">
         <a>Friends</a>
@@ -42,8 +42,14 @@
 
   <div id="pending-tab" class="tab-content is-hidden">
     <div class="box">
-      <h3 class="title is-5">Tab 2 Content</h3>
-      <p>This is content for Tab 2.</p>
+      <h3 class="title is-5">Pending Requests</h3>
+      {% for request in incoming_requests %}
+      <p class="title">Incoming: {{ request.name }}</p>
+      {% endfor %}
+
+      {% for request in outgoing_requests %}
+      <p class="title">Outgoing: {{ request.name }}</p>
+      {% endfor %}
     </div>
   </div>
 
@@ -69,7 +75,8 @@
               </div>
 
               <div class="block">
-                <button class="button is-info is-fullwidth">Find friend</button>
+                <input type="submit" class="button is-info is-fullwidth" value="Find friend">
+                <!-- <button class="button is-info is-fullwidth">Find friend</button> -->
               </div>
 
           </form>
@@ -88,7 +95,13 @@
                     <tr>
                         <td>{{ found_friend.name }}</td>
                         <td>{{ found_friend.email }}</td>
-                        <td><a class="button is-primary">Send Request</a></td>
+                        <td>
+                          <form method="POST" action="{{ url_for('main.send_request') }}">
+                            <input type="hidden" name="friend_id" value="{{ found_friend.id }}">
+                            <input type="submit" class="button is-primary" value="Send request">
+                          </form>
+                        </td>
+                        <!-- <td><a class="button is-primary">Send Request</a></td> -->
                     </tr>
                 </tbody>            
             </table>    

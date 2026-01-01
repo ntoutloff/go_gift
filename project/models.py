@@ -24,14 +24,14 @@ class Gift(db.Model):
     link: Mapped[Optional[str]] = mapped_column(String(1000))
 
 
-class Friend(db.Model):
-    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
-    uid1: Mapped[int] = mapped_column(Integer(), nullable=False)
-    uid2: Mapped[int] = mapped_column(Integer(), nullable=False)
-    requestor: Mapped[str] = mapped_column(Enum('UID1', 'UID2'), nullable=False)
-
-
 class FriendRequest(db.Model):
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+    requestor_id: Mapped[int] = mapped_column(Integer(), nullable=False)
+    requestee_id: Mapped[int] = mapped_column(Integer(), nullable=False)
+
+
+
+class Friend(db.Model):
     id: Mapped[int] = mapped_column(Integer(), primary_key=True)
     user_id: Mapped[int] = mapped_column(Integer(), nullable=False)
     friend_id: Mapped[int] = mapped_column(Integer(), nullable=False)
