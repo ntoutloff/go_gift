@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+import os
 from socket import gethostname
 
 # Initialize SQLAlchemy instance (outside create_app for import access)
@@ -20,6 +20,8 @@ def create_app():
         app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
     else:
         app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
