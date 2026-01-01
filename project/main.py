@@ -39,11 +39,12 @@ def friends():
     friends = [db.session.execute(db.select(User).filter_by(id=friend_id)).scalar_one_or_none() for friend_id in friend_ids]
 
     # Pendings
-    incoming_request_ids = [r.id for r in db.session.execute(db.select(FriendRequest).filter_by(requestee_id=current_user.id)).scalars()]
-    incoming_requests = [db.session.execute(db.select(User).filter_by(id=incoming_request_id)).scalar_one_or_none() for incoming_request_id in incoming_request_ids]
-    outgoing_request_ids = [r.id for r in db.session.execute(db.select(FriendRequest).filter_by(requestor_id=current_user.id)).scalars()]
-    outgoing_requests = [db.session.execute(db.select(User).filter_by(id=outgoing_request_id)).scalar_one_or_none() for outgoing_request_id in outgoing_request_ids]
-
+    requestor_ids = [r.requestor_id for r in db.session.execute(db.select(FriendRequest).filter_by(requestee_id=current_user.id)).scalars()]
+    requestors = [db.session.execute(db.select(User).filter_by(id=requestor_id)).scalar_one_or_none() for requestor_id in requestor_ids]
+    requestee_ids = [r.requestee_id for r in db.session.execute(db.select(FriendRequest).filter_by(requestee_id=current_user.id)).scalars()]
+    requestees = [db.session.execute(db.select(User).filter_by(id=requestee_id)).scalar_one_or_none() for requestee_id in requestee_ids]
+    print(requestors)
+    print(requestees)
 
     # Find friend
     active_tab = None
@@ -61,8 +62,8 @@ def friends():
     return render_template(
         'friends.html',
         friends=friends,
-        incoming_requests=incoming_requests,
-        outgoing_requests=outgoing_requests,
+        incoming_requests=requestors,
+        # outgoing_requests=requestees,
         found_friend=found_friend,
         active_tab=active_tab
     )
