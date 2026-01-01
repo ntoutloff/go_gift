@@ -23,7 +23,7 @@ def create_app():
     if gethostname() != 'blue-liveweb48': # If not running on pythonanywhere, use local sqlite db
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USER}:{DB_PW}@{DB_HOST}:3306/{DB_NAME}'
+        app.config['SQLALCHEMY_DATABASE_URI'] = (f"mysql+pymysql://{DB_USER}:{os.getenv('DB_PW')}@{DB_HOST}:3306/{DB_NAME}")
         app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 280, 'connect_args': {'connect_timeout': 5}}
         
 
