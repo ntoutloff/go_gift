@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from random import randint
 import smtplib
 from email.message import EmailMessage
+import os
 
 from .models import User
 from . import db
@@ -16,7 +17,7 @@ def generate_code() -> str:
 
 def send_confirmation_email(user_email: str, code: str):
     email_sender = 'gogiftmailer@gmail.com'
-    email_password = 'dzxu pxbj czgv osmb' 
+    email_password = os.getenv('EMAIL_PW') 
     email_receiver = user_email
 
     subject = 'GoGift! email confirmation code.'
